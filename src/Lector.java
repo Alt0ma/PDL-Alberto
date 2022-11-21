@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 public class Lector {
     private FileInputStream lector;
     private int linea_actual;
-    // HLECTOR GITHUB!
+    // LECTOR GITHUB 2!
     // Iniciamos el Lector, pero primero hacemos comprobaciones.
     public Lector(String filePath) {
         File doc = new File(filePath);
