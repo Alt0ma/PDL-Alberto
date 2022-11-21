@@ -1,1 +1,4 @@
-
+Error en Analizador Lexico: Linea 1, Comentario de bloque no valido "/sadsad".
+Error en Analizador Lexico: Linea 10, El OPERADOR RELACIONAL ">=" no esta permitido
+Error en Analizador Lexico: Linea 10, Cadena 'hellosadsad;' no permitida.
+Error en Analizador Lexico: Linea 22, Numero no permitido "42000".

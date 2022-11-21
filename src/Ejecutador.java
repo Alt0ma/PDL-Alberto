@@ -12,7 +12,7 @@ public class Ejecutador {
 		}
 
 		@SuppressWarnings("unused")
-		AnalizadorSintactico analizaS = new AnalizadorSintactico(pathAbsoluto, pathAbsoluto + "//src//token");
+		AnalizadorSintactico analizaS = new AnalizadorSintactico(pathAbsoluto, pathAbsoluto + "\\src\\token");
 	}
 
 }

@@ -3,7 +3,6 @@ public class Tokens {
     private String codigo;
     private Object atributo;
     private Object valor;
-    private String nombre;
 
     // Tokens sin atributo
     public Tokens(String code) {
@@ -19,21 +18,12 @@ public class Tokens {
         valor = code;
     }
 
-    public Tokens(String code, Object atrib,String nombre) {
-        codigo = code;
-        atributo = atrib;
-        valor = code;
-        this.nombre=nombre;
-    }
-
     // Tokens palabras reservadas y operadores
     public Tokens(String code, int atrib) {
         codigo = code;
         atributo = atrib;
     }
-    public String getNombre(){
-        return nombre;
-    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -85,12 +75,12 @@ public class Tokens {
     public static Tokens Mayor = new Tokens("Operador", 6);
     public static Tokens Resta = new Tokens("Operador", 7);
 
-    public static Tokens Coma = new Tokens("CaracterEspecial", 0);
-    public static Tokens Punto_Y_Coma = new Tokens("CaracterEspecial", 1);
-    public static Tokens Parentesis_I = new Tokens("CaracterEspecial", 2);
-    public static Tokens Parentesis_D = new Tokens("CaracterEspecial", 3);
-    public static Tokens Llave_I = new Tokens("CaracterEspecial", 4);
-    public static Tokens Llave_D = new Tokens("CaracterEspecial", 5);
+    public static Tokens Coma = new Tokens("CaracterEspecial", ",");
+    public static Tokens Punto_Y_Coma = new Tokens("CaracterEspecial", ";");
+    public static Tokens Parentesis_I = new Tokens("CaracterEspecial", "(");
+    public static Tokens Parentesis_D = new Tokens("CaracterEspecial", ")");
+    public static Tokens Llave_I = new Tokens("CaracterEspecial", "{");
+    public static Tokens Llave_D = new Tokens("CaracterEspecial", "}");
 
     public static Tokens EOF = new Tokens("EOF");
 
@@ -123,6 +113,7 @@ public class Tokens {
         if (atributo == null) {
             return "<" + codigo + ", >";
         }
+
         return "<" + codigo + ", " + atributo + ">";
     }
 }

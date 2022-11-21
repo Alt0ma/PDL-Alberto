@@ -1,6 +1,3 @@
-let n1	int     ;
-let l1	boolean ;
-let cad	string  ;
 /* Programa de ejemplo  */
 /******* Jose Luis Fuertes, julio, 2022 *********/
 /* El ejemplo incorpora elementos del lenguaje opcionales y elementos que no todos los grupos tienen que implementar */
@@ -9,7 +6,7 @@ let s string;	/* variable global cadena */
 
 function FactorialRecursivo int (int n)	/* n: parametro formal de la funcion entera */
 {
-	if (n == 0)	return 1;
+	if (n != 0)	return 1;
 	return n * FactorialRecursivo (n - 1);	/* llamada recursiva */
 }
 

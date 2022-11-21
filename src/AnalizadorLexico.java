@@ -1,7 +1,6 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-// HOLAAA GITHUB 2
+
 public class AnalizadorLexico {
 
     private Map<String, Integer> pal_Res;
@@ -14,8 +13,6 @@ public class AnalizadorLexico {
     private String string_actual;
     private int num_actual;
     private RE_E controler;
-    private Map<String,Integer> idMap =new HashMap<String,Integer>();
-    private Integer idNum=0;
 
     public String getString() {
         return string_actual;
@@ -80,7 +77,7 @@ public class AnalizadorLexico {
 
     // Genera el token
     private Tokens genToken(String code, Object atrib) {
-        Tokens token = new Tokens(code, atrib,string_actual);
+        Tokens token = new Tokens(code, atrib);
         if (code.equals("Cad")) {
             token.setValor(string_actual);
         }
@@ -147,41 +144,39 @@ public class AnalizadorLexico {
                     return getTokens();
                 }
                 else if (char_actual == '/'){
-                    leeChar();
-                    while (char_actual != '\r'&&char_actual !='\u0000'&&char_actual !='\n') {
-                        leeChar();
-                    }
-                    //leeChar();
-                    return getTokens();
-                }
+					leeChar();
+					while (char_actual != '\r'&&char_actual !='\u0000') {
+						leeChar();
+					}
+					leeChar();
+					return getTokens();
+				}
                 //Parte del Gestor de Errores
-                while(char_actual != '\r'&& char_actual != '\n'){
+                while(char_actual != ' ' && char_actual != '\r'){
                     concatValue();
                     leeChar();
                 }
                 controler.write(String.format("Error en Analizador Lexico: Linea %d, Comentario de bloque no valido \"%s\".",
-                        getFileLeido().getLineAc(), string_actual));
+                                getFileLeido().getLineAc(), string_actual));
                 string_actual = "";
-                return getTokens();
             }
 
             // ahora vemos si es del tipo '...'
             if (char_actual == '\'') {
                 leeChar();
                 int cont_char = 0;                                                      //Se guarda un cont, porque las cadenas no pueden ser mayores que 64 caractere y de paso para el gestor de errores.
-                while (char_actual != '\'' && cont_char < 65 && char_actual != '\r'&& char_actual != '\n') {
+                while (char_actual != '\'' && cont_char < 65 && char_actual != '\r') {
                     concatValue();
                     leeChar();
                     cont_char++;
                 }
                 if(char_actual == '\''){
                     leeChar();
-                    return genToken("Cad", "\""+ string_actual+"\"");
+                    return genToken("Cad", string_actual);
                 }
                 controler.write(String.format("Error en Analizador Lexico: Linea %d, Cadena \'%s\' no permitida.",
-                        getFileLeido().getLineAc(), string_actual));
+                                getFileLeido().getLineAc(), string_actual));
                 string_actual = "";
-                return getTokens();
             }
 
             // Vemos si se trata de una Cadena
@@ -189,7 +184,7 @@ public class AnalizadorLexico {
                 concatValue();
                 leeChar();
                 int cont = 0;
-                while (char_actual != '\"' && char_actual != '\r' && cont < 65&& char_actual != '\n') {
+                while (char_actual != '\"' && char_actual != '\r' && cont < 65) {
                     concatValue();
                     leeChar();
                     cont++;
@@ -199,9 +194,8 @@ public class AnalizadorLexico {
                     return genToken("Cad", string_actual);
                 }
                 controler.write(String.format("Error en Analizador Lexico: Linea %d, Cadena \'%s\' no permitida.",
-                        getFileLeido().getLineAc(), string_actual));
+                                getFileLeido().getLineAc(), char_actual));
                 string_actual = "";
-                return getTokens();
             }
 
             // Vemos ahora si se trata de una variable
@@ -215,18 +209,13 @@ public class AnalizadorLexico {
                 Integer codePalRes = pal_Res.get(string_actual);
                 if (codePalRes != null) {
                     return genToken("PalRes", codePalRes);
-                }
+                } 
                 else {
-                    if(idMap.containsKey(string_actual)){
-                        // Ya teniamos el ID
-                        return genToken("Id", idMap.get(string_actual));
-                    } else{
-                        // no estaba añadido
-                        idNum++;
-                        idMap.put(string_actual,idNum);
-                        return genToken("Id", idMap.get(string_actual));
+                    IntroTS intro = tabla_mnp.searchIntrobyLex(string_actual);
+                    if (intro == null) {
+                        intro = tabla_mnp.insertIntro(string_actual);
                     }
-                    //return genToken("Id", intro.getID());
+                    return genToken("Id", intro.getID());
                 }
             }
 
@@ -242,8 +231,7 @@ public class AnalizadorLexico {
                     return genToken("Num", num_actual);
                 }
                 controler.write(String.format("Error en Analizador Lexico: Linea %d, Numero no permitido \"%d\".",
-                        getFileLeido().getLineAc(), num_actual));
-                return getTokens();
+                                getFileLeido().getLineAc(), num_actual));
             }
 
             // Vemos si se trata de Operadores
@@ -251,11 +239,9 @@ public class AnalizadorLexico {
                 if (char_actual == '=') {
                     concatValue();
                     leeChar();
-
                     if(char_actual == '='){
-                        concatValue();
                         controler.write(String.format("Error en Analizador Lexico: Linea %d, El OPERADOR de IGUALDAD \"==\" no esta permitido",
-                                getFileLeido().getLineAc()));
+                                    getFileLeido().getLineAc()));
 
                     }
                     return genToken("Operador", simbolos.get(string_actual));
@@ -265,7 +251,7 @@ public class AnalizadorLexico {
                     leeChar();
                     if(char_actual == '+'){
                         controler.write(String.format("Error en Analizador Lexico: Linea %d, El OPERADOR de INCREMENTO \"++\" no esta permitido",
-                                getFileLeido().getLineAc()));
+                                    getFileLeido().getLineAc()));
 
                     }
                     return genToken("Operador", simbolos.get(string_actual));
@@ -274,8 +260,8 @@ public class AnalizadorLexico {
                     concatValue();
                     leeChar();
                     if(char_actual == '-'){
-                        controler.write(String.format("Error en Analizador Lexico: Linea %d, El OPERADOR de DECREMENTO \"--\" no esta permitido",
-                                getFileLeido().getLineAc()));
+                        controler.write(String.format("Error en Analizador Lexico: Linea %d, El OPERADOR de DECREMENTOº \"--\" no esta permitido",
+                                    getFileLeido().getLineAc()));
 
                     }
                     return genToken("Operador", simbolos.get(string_actual));
@@ -289,14 +275,14 @@ public class AnalizadorLexico {
                         return genToken("Operador", simbolos.get(string_actual));
                     }
                     controler.write(String.format("Error en Analizador Lexico: Linea %d, Error en OPERADOR LOGICO expected another \'&\'.",
-                            getFileLeido().getLineAc()));
+                                    getFileLeido().getLineAc()));
                 }
                 if (char_actual == '<') {
                     concatValue();
                     leeChar();
                     if(char_actual == '='){
                         controler.write(String.format("Error en Analizador Lexico: Linea %d, El OPERADOR RELACIONAL \"<=\" no esta permitido.",
-                                getFileLeido().getLineAc()));
+                                    getFileLeido().getLineAc()));
                         return getTokens();
                     }
                     return genToken("Operador", simbolos.get(string_actual));
@@ -306,7 +292,7 @@ public class AnalizadorLexico {
                     leeChar();
                     if(char_actual == '='){
                         controler.write(String.format("Error en Analizador Lexico: Linea %d, El OPERADOR RELACIONAL \">=\" no esta permitido.",
-                                getFileLeido().getLineAc()));
+                                    getFileLeido().getLineAc()));
                         return getTokens();
                     }
                     return genToken("Operador", simbolos.get(string_actual));
@@ -318,11 +304,11 @@ public class AnalizadorLexico {
                         concatValue();
                         leeChar();
                         return genToken("Operador", simbolos.get(string_actual));
-                    }
+                    } 
                     else {
                         return genToken("Operador", simbolos.get(string_actual));
                     }
-                }
+                } 
                 else {
                     if (charEspec(char_actual)) {
                         concatValue();
@@ -330,31 +316,15 @@ public class AnalizadorLexico {
                         return genToken("CaracterEspecial", car_Especial.get(string_actual));
                     }
                 }
-                while(char_actual != ' ' && char_actual != '\r'&&char_actual != '\n'&& char_actual != '(' ){
-                    if(string_actual.length()!=0){ // " !l "
-                        if(!idMap.containsKey(string_actual.substring(1,string_actual.length()))){
-                            concatValue();
-                            leeChar();
-                        }
-                        else{
-                            System.out.println("ACTUAL  _______________"+ string_actual);
-                            controler.write(String.format("Error en Analizador Lexico: Linea %d, Caracter no esperado \"%s\".",
-                                    getFileLeido().getLineAc(), string_actual.substring(0,1)));
-                            string_actual = "";
-                            return getTokens();
-                        }
-                    }
-                    else {
-                        concatValue();
-                        leeChar();
-                    }
+                while(char_actual != ' ' && char_actual != '\r'){
+                    concatValue();
+                    leeChar();
                 }
                 controler.write(String.format("Error en Analizador Lexico: Linea %d, Caracter no esperado \"%s\".",
-                        getFileLeido().getLineAc(), string_actual));
+                getFileLeido().getLineAc(), string_actual));
                 string_actual = "";
-                return getTokens();
             }
-            //return token;
+            return token;
         }
         if (char_actual == '\t') {
             leeChar();

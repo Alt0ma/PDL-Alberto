@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class AnalizadorSintactico {
 
     private Tokens actualToken;
@@ -11,14 +9,14 @@ public class AnalizadorSintactico {
     private String lex;
     private String rutaAbsoluta;
     private RE_E reg_E;
-    private ArrayList<Tokens> tokensGenerados= new ArrayList<Tokens>();
-    private TablaSimbolos tablaSimbolos;
+    private Integer llaves_ab;
+
 
     public AnalizadorSintactico(String rutaEntrada, String rutaSalida) {
 
         lex = "";
-        rutaEntrada_text =  rutaEntrada + "//src//PruebaConError3.txt";
-        reg_E = new RE_E(rutaEntrada + "//errores");
+        rutaEntrada_text =  rutaEntrada + "\\src\\nose.js";
+        reg_E = new RE_E(rutaEntrada + "\\errores");
         lectura = new Lector(rutaEntrada_text);
         tabla_gene = new TS(rutaEntrada);
         rutaAbsoluta = rutaEntrada;
@@ -30,31 +28,9 @@ public class AnalizadorSintactico {
         compToken(actualToken);
 
         while (actualToken.getCodigo() != "EOF") {
-            tokensGenerados.add(actualToken);
+            compToken(actualToken);
             nextToken();
         }
-        ArrayList<ArrayList<TSColumna>> TStotal;
-        tablaSimbolos = new TablaSimbolos();
-        TStotal=tablaSimbolos.generarTabla(tokensGenerados);
-
-        for (Tokens tokenActual:tokensGenerados){
-            System.out.println(tokenActual.toString()+" -> "+tokenActual.getNombre());
-        }
-
-        //System.out.println("_______________________________________________________________________________");
-        int i=0;
-
-        for (ArrayList<TSColumna> TSActual:TStotal){
-            System.out.println();
-            System.out.println("#"+i);
-
-            i++;
-            for (TSColumna columna:TSActual){
-                System.out.println(columna.toString());
-            }
-
-        }
-
         System.out.println("Tokens generados. \n");
         tabla_gene.borrarTabla();
         System.out.println("Archivos creados en ruta: " + rutaSalida);
@@ -72,7 +48,9 @@ public class AnalizadorSintactico {
         if(token.equals(Tokens.FUNCTION) ){
             nextToken();
             tabla_gene.crearTabla(rutaAbsoluta, aLexico.getString());
+            llaves_ab = 1;
         }
+   //     if()
         if(token.getCodigo() == "CaracterEspecial" && token.getAtrib() == (Integer) 5){
             tabla_gene.borrarTabla();
         }

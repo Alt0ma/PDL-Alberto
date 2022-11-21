@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 public class Lector {
     private FileInputStream lector;
     private int linea_actual;
-    // LECTOR GITHUB 2!
+
     // Iniciamos el Lector, pero primero hacemos comprobaciones.
     public Lector(String filePath) {
         File doc = new File(filePath);
@@ -34,7 +34,7 @@ public class Lector {
         try {
             if ((c = lector.read()) != -1) {
                 caracter_actual = (char) c;
-                //System.out.println(caracter_actual);
+                System.out.println(caracter_actual);
    //             caracter_actual = (char) lector.read();
                 if (caracter_actual == '\n') {
                     ++this.linea_actual;
