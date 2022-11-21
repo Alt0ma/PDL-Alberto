@@ -1,0 +1,9 @@
+Error en Analizador Lexico: Linea 1, Comentario de bloque no valido "/saldjanljdnasld asdsa dasd;".
+Error en Analizador Lexico: Linea 4, Caracter no esperado "_dsf	boolean".
+Error en Analizador Lexico: Linea 10, El OPERADOR RELACIONAL ">=" no esta permitido.
+Error en Analizador Lexico: Linea 11, Caracter no esperado "!=".
+Error en Analizador Lexico: Linea 11, Cadena 'hello;' no permitida.
+Error en Analizador Lexico: Linea 12, Caracter no esperado "%".
+Error en Analizador Lexico: Linea 17, Caracter no esperado "%".
+Error en Analizador Lexico: Linea 21, El OPERADOR de DECREMENTO "--" no esta permitido
+Error en Analizador Lexico: Linea 21, El OPERADOR de INCREMENTO "++" no esta permitido
