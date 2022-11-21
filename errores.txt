@@ -1,0 +1,3 @@
+Error en Analizador Lexico: Linea 9, Caracter no esperado "!=".
+Error en Analizador Lexico: Linea 26, El OPERADOR de DECREMENTOº "--" no esta permitido
+Error en Analizador Lexico: Linea 27, Caracter no esperado "!=".

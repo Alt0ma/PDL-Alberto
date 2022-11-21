@@ -1,0 +1,3 @@
+Si no os ejecuta bien, revisad los paths.
+Alberto echa un ojo al gestor de error del comentario de bloque, creo se puede poner mas clean.
+Faltaría hacer mas pruebas para comprobar bien bien el funcionamineto del gestor de errores, pero pinta bien.

@@ -1,0 +1,34 @@
+#1:
+* LEXEMA: 'n'
+  +tipo : ''
+
+#2:
+
+#3:
+* LEXEMA: 'n'
+  +tipo : ''
+* LEXEMA: 'factorial'
+  +tipo : ''
+* LEXEMA: 'do'
+  +tipo : ''
+
+#0:
+* LEXEMA: 's'
+  +tipo : ''
+* LEXEMA: 'FactorialRecursivo'
+  +tipo : ''
+* LEXEMA: 'uno'
+  +tipo : ''
+* LEXEMA: 'UNO'
+  +tipo : ''
+* LEXEMA: 'salto'
+  +tipo : ''
+* LEXEMA: 'FactorialDo'
+  +tipo : ''
+* LEXEMA: 'while'
+  +tipo : ''
+* LEXEMA: 'n'
+  +tipo : ''
+* LEXEMA: 'factorial'
+  +tipo : ''
+

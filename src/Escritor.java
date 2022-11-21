@@ -8,7 +8,7 @@ import java.io.Writer;
 import javax.swing.text.Document;
 
 public class Escritor {
-
+//GITHUB
     private String nombreFile;
 
     private Writer escritor_File;
