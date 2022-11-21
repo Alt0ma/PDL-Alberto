@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-// HOLAAA GITHUB
+// HOLAAA GITHUB 2
 public class AnalizadorLexico {
 
     private Map<String, Integer> pal_Res;
